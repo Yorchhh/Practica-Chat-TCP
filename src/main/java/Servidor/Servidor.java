@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import Monitor.ComunHilos;
+
 public class Servidor {
 
 	private static int puerto = 5000;
@@ -14,6 +16,7 @@ public class Servidor {
 
 		while (true) {
 			ServerSocket servidor;
+			ComunHilos chilos= new ComunHilos();
 			try {
 
 				servidor = new ServerSocket(puerto);
@@ -24,7 +27,7 @@ public class Servidor {
 					Socket sc = servidor.accept();
 					System.out.println("Cliente conectado");
 					//Lanzamos hilo y corremos
-					AtiendeCliente cliente = new AtiendeCliente(sc);
+					AtiendeCliente cliente = new AtiendeCliente(sc, chilos);
 					cliente.start();
 
 				}

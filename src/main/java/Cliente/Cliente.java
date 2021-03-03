@@ -25,15 +25,19 @@ public class Cliente {
 			DataOutputStream salida = new DataOutputStream(sc.getOutputStream());
 			//preguntamos cual es el nombre de usuario y lo mostramos
 			System.out.println("** ¿USUARIO? **");
-			String user = kb.next();
+			String user = kb.nextLine();
 			salida.writeUTF(user);
 			//Lanzamos el hilo
 			AtiendeServidor servidor = new AtiendeServidor(sc);
 			servidor.start();
+			String mensaje = kb.nextLine();
 
-			while (true) {
-				salida.writeUTF(kb.nextLine());
+			while (!mensaje.equals("*")) {
+				salida.writeUTF(mensaje);
+				mensaje=kb.nextLine();
 			}
+			salida.writeUTF(mensaje);
+			System.out.println( "ADIOS");
 
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
